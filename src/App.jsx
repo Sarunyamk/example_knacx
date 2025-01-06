@@ -1,12 +1,12 @@
 
-
+import AppRouter from "./routes/AppRoute"
 function App() {
 
 
   return (
-    <>
-
-    </>
+    <div>
+      <AppRouter />
+    </div>
   )
 }
 
