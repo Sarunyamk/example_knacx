@@ -14,19 +14,27 @@ const Login = () => {
     const error = useSelector((state) => state.userStore.error);
     const { register, handleSubmit } = useForm();
 
+    const userLogin = JSON.parse(localStorage.getItem("currentUser"));
+
     const onSubmit = (data) => {
         setIsSubmitting(true); // ตั้งค่า isSubmitting เป็น true
         dispatch(login(data)); // ส่งข้อมูลไปที่ Redux
     };
-
+    console.log(userLogin, "userLogin userLogin");
     useEffect(() => {
-        if (isSubmitting && !error) { // ตรวจสอบเมื่อไม่มีข้อผิดพลาด
+        if (isSubmitting && !error && userLogin.role === "user") { // ตรวจสอบเมื่อไม่มีข้อผิดพลาด
             toast.success("Login success");
             navigate("/");
             setIsSubmitting(false); // รีเซ็ตสถานะการส่งข้อมูล
+            console.log("Im USERRRR");
+        }
+        else if (isSubmitting && !error && userLogin.role === "admin") {
+            toast.success("Login success");
+            navigate("/admin");
+            setIsSubmitting(false); // รีเซ็ตสถานะการส่งข้อมูล
         }
 
-        if (isSubmitting && error) { // ถ้ามีข้อผิดพลาด
+        else { // ถ้ามีข้อผิดพลาด
             setIsSubmitting(false); // รีเซ็ตสถานะการส่งข้อมูล
         }
     }, [error, isSubmitting]);

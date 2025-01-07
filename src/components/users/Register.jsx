@@ -37,7 +37,7 @@ const Register = () => {
 
     return (
         <div>
-            <section className="w-96 bg-gray-200 mx-auto mt-20 flex flex-col justify-center items-center rounded-lg shadow-xl p-6 ">
+            <section className="w-96 bg-gray-200 mx-auto mt-10 flex flex-col justify-center items-center rounded-lg shadow-xl p-6 ">
                 <h1 className="text-2xl">Register</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col justify-center gap-4">
                     <label className="form-control w-full ">
@@ -72,6 +72,18 @@ const Register = () => {
                             className="input input-bordered w-full "
                             {...register("confirmPassword")}
                         />
+                    </label>
+                    <label className="form-control w-full">
+                        <div className="label">
+                            <span className="label-text">Role</span>
+                        </div>
+                        <select
+                            className="input input-bordered w-full"
+                            {...register("role")}
+                        >
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </select>
                     </label>
                     {error && <p className="text-red-500 text-sm -mt-2">{error}</p>}
                     <button type="submit" className="btn btn-outline mt-4 w-2/4 mx-auto btn-primary ">

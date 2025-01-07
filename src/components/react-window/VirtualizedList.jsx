@@ -5,7 +5,7 @@ const VirtualizedList = () => {
 
     return (
         <div>
-            <h1 className="text-2xl font-bold text-center my-10">รายการ</h1>
+            <h1 className="text-2xl font-bold text-center my-10">List</h1>
             <List
                 className="h-screen overflow-y-scroll bg-red-400 text-xl"
                 height={550}

@@ -20,6 +20,10 @@ const userSchema = Joi.object({
             "any.only": "Confirm Password does not match Password",
             "string.empty": "Confirm Password is required",
         }),
+    role: Joi.string().valid("admin", "user").required().messages({
+        "string.empty": "Role is required",
+        "any.only": "Invalid role",
+    }),
 });
 
 
@@ -40,7 +44,7 @@ const userSlice = createSlice({
                 return;
             }
 
-            const { email, password } = action.payload;
+            const { email, password, role } = action.payload;
             const userExists = state.users.find((user) => user.email === email);
 
             if (userExists) {
@@ -48,7 +52,7 @@ const userSlice = createSlice({
                 return;
             }
 
-            const newUser = { email, password };
+            const newUser = { email, password, role };
             state.users.push(newUser); // เพิ่มผู้ใช้ใหม่ใน Redux
             localStorage.setItem("users", JSON.stringify(state.users)); // บันทึกผู้ใช้ใน Local Storage
             state.error = null; // ล้างข้อผิดพลาด
