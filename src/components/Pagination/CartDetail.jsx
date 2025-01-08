@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { toast } from "react-toastify";
-import { removeCart, decrementQuantity, incrementQuantity } from "../../reducers/cartSlice";
+import { removeCart, decrementQuantity, incrementQuantity, clearCart } from "../../reducers/cartSlice";
 
 const CartDetail = ({ setModalCart }) => {
 
@@ -41,7 +41,6 @@ const CartDetail = ({ setModalCart }) => {
     const hdlDecrement = (productId) => {
         if (userLogin) {
             dispatch(decrementQuantity({ userId: userLogin.id, productId }));
-            toast.info("ลดจำนวนสินค้าเรียบร้อย!");
         } else {
             toast.error("ไม่พบข้อมูลผู้ใช้งาน!");
         }
@@ -50,13 +49,16 @@ const CartDetail = ({ setModalCart }) => {
     const hdlIncrement = (productId) => {
         if (userLogin) {
             dispatch(incrementQuantity({ userId: userLogin.id, productId }));
-            toast.info("เพิ่มจำนวนสินค้าเรียบร้อย!");
         } else {
             toast.error("ไม่พบข้อมูลผู้ใช้งาน!");
         }
     };
 
-    console.log("Redux State in useSelector:", userCart);
+    const hdlCheckout = () => {
+        dispatch(clearCart({ userId: userLogin.id })); // ส่งแค่ userId
+        toast.success("ชำระเงินเรียบร้อย!");
+    };
+
 
 
     return (
@@ -134,6 +136,13 @@ const CartDetail = ({ setModalCart }) => {
                             <span className="text-blue-500 font-bold">{userCart?.totalPrice.toFixed(2) || "0.00"}</span>{" "}
                             บาท
                         </h1>
+                        {
+                            userCart?.items.length > 0 && (
+                                <button onClick={hdlCheckout} className="btn btn-primary">
+                                    ชำระเงิน
+                                </button>
+                            )
+                        }
                     </div>
                 </div>
             </div>

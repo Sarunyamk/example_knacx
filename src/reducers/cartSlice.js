@@ -115,7 +115,6 @@ const cartSlice = createSlice({
 
             if (userCartIndex !== -1) {
                 state.splice(userCartIndex, 1);
-                // บันทึกลง LocalStorage
                 localStorage.setItem("cart", JSON.stringify(state));
             }
         },
