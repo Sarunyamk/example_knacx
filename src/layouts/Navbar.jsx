@@ -27,7 +27,12 @@ const Navbar = () => {
                     {
                         userLogin ?
                             <div className="flex gap-10">
-                                <h1>Hello User</h1>
+                                {
+                                    userLogin.role === "admin" ?
+                                        <h1>Hello Admin</h1>
+                                        :
+                                        <h1>Hello User</h1>
+                                }
                                 <button onClick={hdlLogout}>Logout</button>
                             </div>
 

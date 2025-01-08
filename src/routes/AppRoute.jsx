@@ -11,6 +11,7 @@ import NotFound from '../layouts/NotFound';
 
 
 
+
 const pageRouter = createBrowserRouter([
 
     {
@@ -20,15 +21,16 @@ const pageRouter = createBrowserRouter([
             { index: true, element: <HomePage /> },
             { path: "register", element: <Register /> },
             { path: "login", element: <Login /> },
+            { path: "shop", element: <Pagination /> },
             {
-                path: "admin",
+                path: "admin-create",
                 element: (
                     <ProtectedRoute allowedRoles={["admin"]}>
                         <Shop />
                     </ProtectedRoute>
                 ),
             },
-            { path: "shop", element: <Pagination /> },
+
         ],
     }, {
         path: "*",

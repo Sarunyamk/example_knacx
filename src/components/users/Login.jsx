@@ -30,7 +30,7 @@ const Login = () => {
         }
         else if (isSubmitting && !error && userLogin.role === "admin") {
             toast.success("Login success");
-            navigate("/admin");
+            navigate("/admin-create");
             setIsSubmitting(false); // รีเซ็ตสถานะการส่งข้อมูล
         }
 
