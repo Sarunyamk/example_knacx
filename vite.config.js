@@ -1,7 +1,23 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+// import { defineConfig } from 'vite'
+// import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
+// // https://vite.dev/config/
+// export default defineConfig({
+//   plugins: [react()],
+// })
+
+import { defineConfig } from "vite";
+
 export default defineConfig({
-  plugins: [react()],
-})
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ["react", "react-dom"], // แยก React ออกเป็นไฟล์ของตัวเอง
+          vendor: ["axios", "lodash"], // แยก Libraries อื่น
+        },
+      },
+    },
+    chunkSizeWarningLimit: 600, // ขยายขีดจำกัดการเตือน (ถ้าจำเป็น)
+  },
+});
