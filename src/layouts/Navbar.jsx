@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaShoppingCart } from "react-icons/fa";
 import { logout } from "../reducers/userSlice";
 import { useState } from "react";
+import { FaMoon } from "react-icons/fa";
+import { IoSunnyOutline } from "react-icons/io5";
+
 import CartDetail from "../components/Pagination/CartDetail";
 import useDarkMode from "../utils/useDarkMode";
 
@@ -63,13 +66,12 @@ const Navbar = () => {
                             </Link>
                         </div>
                     )}
-                    <div className="form-control">
+                    <div className="form-control flex flex-row items-center gap-1">
                         <label
                             className="label cursor-pointer"
                             aria-label="Toggle Dark Mode"
                             onClick={toggleDarkMode}
                         >
-
                             <input
                                 type="checkbox"
                                 className="toggle"
@@ -77,7 +79,15 @@ const Navbar = () => {
                                 readOnly
                             />
                         </label>
+                        <span className="text-xs md:text-sm">
+                            {isDarkMode ? (
+                                <FaMoon className="w-3 h-3 text-yellow-500" />
+                            ) : (
+                                <IoSunnyOutline className="w-5 h-5 text-yellow-500" />
+                            )}
+                        </span>
                     </div>
+
                 </div>
 
             </nav>
