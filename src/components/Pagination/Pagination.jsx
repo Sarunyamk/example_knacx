@@ -73,9 +73,9 @@ const Pagination = () => {
         <div>
             <div className="grid grid-cols-4 gap-8 m-20">
                 {currentData().map((item, index) => (
-                    <div key={index} className="flex flex-col w-80 h-96 items-center gap-4 justify-center p-4 border-2 rounded-lg shadow-xl">
+                    <div key={index} className="flex flex-col w-80 h-96  items-center gap-4 justify-center p-4 border-2 rounded-lg shadow-xl">
                         <img src={item.image} className="w-1/2 h-1/2" alt={item.title} />
-                        <h1>{item.title}</h1>
+                        <h1 className="text-center text-sm">{item.title}</h1>
                         <h1>{item.price} $</h1>
                         <div className="flex gap-4">
                             {userLogin && userLogin.role === "admin" ? (
