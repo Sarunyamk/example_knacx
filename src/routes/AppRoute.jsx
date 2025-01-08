@@ -64,8 +64,8 @@ const AppRouter = () => (
             <Route path="/" element={<Layout />}>
                 <Route index element={<HomePage />} />
                 <Route path="register" element={<Register />} />
-                <Route path="login" element={<Pagination />} />
-                <Route path="shop" element={<Login />} />
+                <Route path="login" element={<Login />} />
+                <Route path="shop" element={<Pagination />} />
                 <Route path="admin-create" element={<ProtectedRoute allowedRoles={["admin"]}><Shop /></ProtectedRoute>} />
             </Route>
             <Route path="*" element={<NotFound />} />
