@@ -20,7 +20,7 @@ const ExportCSV = () => {
                 filename={"products.csv"}
                 className="m-2 btn btn-ghost btn-xs"
             >
-                Download CSV
+                ดาวน์โหลดไฟล์
             </CSVLink>
         </div>
     )

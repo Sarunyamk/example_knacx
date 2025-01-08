@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import Swal from 'sweetalert2'
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom'
+
 
 import usePagination from "./usePagination"
 import { fetchProducts, deleteProduct } from "./../../reducers/productSlice"
+import { addToCart } from "./../../reducers/cartSlice"
 import EditProduct from "../admin/EditProduct";
 
 const Pagination = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { items, loading, error } = useSelector((state) => state.productStore);
     const userLogin = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -28,30 +33,41 @@ const Pagination = () => {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
-    console.log(userLogin, "user roleee");
 
     const hdlDeleteProduct = (id) => {
         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            title: "คุณแน่ใจสำหรับการลบสินค้านี้?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "ยืนยัน ลบสินค้า",
+            cancelButtonText: "ยกเลิก",
         }).then((result) => {
             if (result.isConfirmed) {
-                // ลบสินค้าเมื่อผู้ใช้ยืนยัน
                 dispatch(deleteProduct(id));
                 Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
+                    title: "ลบสินค้าเรียบร้อยแล้ว!",
                     icon: "success"
                 });
             }
         });
     };
 
+    const handleAddToCart = (product) => {
+        if (userLogin) {
+            dispatch(addToCart({
+                userId: userLogin.id,
+                product,
+            }));
+            toast.success("เพิ่มรายการสินค้าเข้าตะกร้าเรียบร้อยแล้ว!");
+        } else {
+            toast.error("กรุณา เข้าสู่ระบบ ก่อนสั่งซื้อสินค้า");
+            navigate("/login");
+        }
+    };
+
+    console.log(userLogin);
 
     return (
         <div>
@@ -71,12 +87,12 @@ const Pagination = () => {
                                         }}
                                         className="bg-red-500 text-white p-3 rounded-lg"
                                     >
-                                        Edit
+                                        แก้ไขสินค้า
                                     </button>
-                                    <button onClick={() => hdlDeleteProduct(item.id)} className="bg-red-500 text-white p-2 rounded-lg">Delete</button>
+                                    <button onClick={() => hdlDeleteProduct(item.id)} className="bg-red-500 text-white p-2 rounded-lg">ลบ</button>
                                 </div>
                             ) : (
-                                <button className="bg-blue-500 text-white p-2 rounded-lg">Add to Cart</button>
+                                <button onClick={() => handleAddToCart(item)} className="bg-blue-500 text-white p-2 rounded-lg">เพิ่มเข้าตะกร้าสินค้า</button>
                             )}
                         </div>
                     </div>
@@ -90,7 +106,7 @@ const Pagination = () => {
             )}
             <div className="flex justify-center items-center gap-4">
                 <button onClick={prevPage} disabled={currentPage === 1} className="p-2 border-2 rounded-lg disabled:opacity-50">
-                    Previous
+                    ก่อนหน้า
                 </button>
                 {Array.from({ length: maxPage }, (_, i) => (
                     <button
@@ -102,7 +118,7 @@ const Pagination = () => {
                     </button>
                 ))}
                 <button onClick={nextPage} disabled={currentPage === maxPage} className="p-2 border-2 rounded-lg disabled:opacity-50">
-                    Next
+                    ถัดไป
                 </button>
             </div>
         </div>

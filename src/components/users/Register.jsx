@@ -19,75 +19,75 @@ const Register = () => {
 
     const onSubmit = (data) => {
         setIsSubmitting(true);
-        dispatch(registerUser(data)); // ส่งข้อมูลไปที่ Redux
+        dispatch(registerUser(data));
     };
 
     useEffect(() => {
-        if (isSubmitting && !error) { // ตรวจสอบเฉพาะเมื่อมีการกด submit
-            toast.success("Register success");
+        if (isSubmitting && !error) {
+            toast.success("ลงทะเบียนเรียบร้อยแล้ว!");
             navigate("/login");
-            setIsSubmitting(false); // รีเซ็ตสถานะการส่งข้อมูล
+            setIsSubmitting(false);
         }
 
-        if (isSubmitting && error) { // ถ้ามี error
-            setIsSubmitting(false); // รีเซ็ตสถานะการส่งข้อมูล
+        if (isSubmitting && error) {
+            setIsSubmitting(false);
         }
-    }, [error, isSubmitting]); // ตรวจสอบ error และ navigate ทุกครั้งที่เปลี่ยนค่า
+    }, [error, isSubmitting]);
 
 
     return (
         <div>
             <section className="w-96 bg-gray-200 mx-auto mt-10 flex flex-col justify-center items-center rounded-lg shadow-xl p-6 ">
-                <h1 className="text-2xl">Register</h1>
+                <h1 className="text-2xl">ลงทะเบียน</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col justify-center gap-4">
                     <label className="form-control w-full ">
                         <div className="label">
-                            <span className="label-text">Email</span>
+                            <span className="label-text">อีเมล</span>
                         </div>
                         <input
                             type="email"
-                            placeholder="Type here"
+                            placeholder="กรอกอีเมลที่นี่..."
                             className="input input-bordered w-full "
                             {...register("email")}
                         />
                     </label>
                     <label className="form-control w-full ">
                         <div className="label">
-                            <span className="label-text">Password</span>
+                            <span className="label-text">รหัสผ่าน</span>
                         </div>
                         <input
                             type="password"
-                            placeholder="Type here"
+                            placeholder="กรอกรหัสผ่านที่นี่..."
                             className="input input-bordered w-full "
                             {...register("password")}
                         />
                     </label>
                     <label className="form-control w-full ">
                         <div className="label">
-                            <span className="label-text">Confirm Password</span>
+                            <span className="label-text">ยืนยันรหัสผ่าน</span>
                         </div>
                         <input
                             type="password"
-                            placeholder="Type here"
+                            placeholder="กรอกรหัสผ่านที่นี่..."
                             className="input input-bordered w-full "
                             {...register("confirmPassword")}
                         />
                     </label>
-                    <label className="form-control w-full">
-                        <div className="label">
-                            <span className="label-text">Role</span>
+
+                    <label class="form-control w-full ">
+                        <div class="label">
+                            <span class="label-text">สิทธิ์ผู้ใช้งาน</span>
                         </div>
-                        <select
-                            className="input input-bordered w-full"
-                            {...register("role")}
-                        >
+                        <select class="select select-bordered"
+                            {...register("role")}>
                             <option value="user">User</option>
                             <option value="admin">Admin</option>
                         </select>
+
                     </label>
                     {error && <p className="text-red-500 text-sm -mt-2">{error}</p>}
                     <button type="submit" className="btn btn-outline mt-4 w-2/4 mx-auto btn-primary ">
-                        Register
+                        ลงทะเบียน
                     </button>
                 </form>
             </section>

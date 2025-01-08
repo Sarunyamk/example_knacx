@@ -1,5 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import Joi from "joi";
+
+export const productSchema = Joi.object({
+    id: Joi.number().optional(),
+    title: Joi.string().required().messages({
+        "string.empty": "กรุณากรอก ชื่อสินค้า",
+    }),
+    price: Joi.number().required().messages({
+        "number.base": "กรุณากรอกราคาให้ถูกต้อง",
+        "any.required": "กรุณากรอกราคา",
+    }),
+    image: Joi.string().allow(null, "").messages({
+        "string.empty": "กรุณาอัปโหลดรูปภาพ",
+    }),
+});
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", async () => {
     const localProducts = JSON.parse(localStorage.getItem("products")) || [];
@@ -31,6 +46,7 @@ const productsSlice = createSlice({
     initialState,
     reducers: {
         addProduct: (state, action) => {
+
             const existingProducts = JSON.parse(localStorage.getItem("products")) || [];
             const maxId = existingProducts.length > 0
                 ? Math.max(...existingProducts.map((item) => Number(item.id)))

@@ -17,58 +17,57 @@ const Login = () => {
     const userLogin = JSON.parse(localStorage.getItem("currentUser"));
 
     const onSubmit = (data) => {
-        setIsSubmitting(true); // ตั้งค่า isSubmitting เป็น true
-        dispatch(login(data)); // ส่งข้อมูลไปที่ Redux
+        setIsSubmitting(true);
+        dispatch(login(data));
     };
     console.log(userLogin, "userLogin userLogin");
     useEffect(() => {
-        if (isSubmitting && !error && userLogin.role === "user") { // ตรวจสอบเมื่อไม่มีข้อผิดพลาด
-            toast.success("Login success");
+        if (isSubmitting && !error && userLogin.role === "user") {
+            toast.success("เข้าสู่ระบบเรียบร้อยแล้ว!");
             navigate("/");
-            setIsSubmitting(false); // รีเซ็ตสถานะการส่งข้อมูล
-            console.log("Im USERRRR");
+            setIsSubmitting(false);
         }
         else if (isSubmitting && !error && userLogin.role === "admin") {
-            toast.success("Login success");
+            toast.success("เข้าสู่ระบบเรียบร้อยแล้ว!");
             navigate("/admin-create");
-            setIsSubmitting(false); // รีเซ็ตสถานะการส่งข้อมูล
+            setIsSubmitting(false);
         }
 
-        else { // ถ้ามีข้อผิดพลาด
-            setIsSubmitting(false); // รีเซ็ตสถานะการส่งข้อมูล
+        else {
+            setIsSubmitting(false);
         }
     }, [error, isSubmitting]);
 
     return (
         <div>
             <section className="w-96 bg-gray-200 mx-auto mt-20 flex flex-col items-center rounded-lg shadow-xl p-4 gap-4">
-                <h1 className="text-2xl">Login</h1>
+                <h1 className="text-2xl">เข้าสู่ระบบ</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col justify-center gap-4">
                     <label className="form-control w-full ">
                         <div className="label">
-                            <span className="label-text">Email</span>
+                            <span className="label-text">อีเมล</span>
                         </div>
                         <input
                             type="email"
-                            placeholder="Type here"
+                            placeholder="กรอกอีเมลที่นี่..."
                             className="input input-bordered w-full "
                             {...register("email")}
                         />
                     </label>
                     <label className="form-control w-full ">
                         <div className="label">
-                            <span className="label-text">Password</span>
+                            <span className="label-text">รหัสผ่าน</span>
                         </div>
                         <input
                             type="password"
-                            placeholder="Type here"
+                            placeholder="กรอกรหัสผ่านที่นี่..."
                             className="input input-bordered w-full "
                             {...register("password")}
                         />
                     </label>
                     {error && <p className="text-red-500 text-sm -mt-2">{error}</p>}
                     <button type="submit" className="btn btn-outline mt-4 w-2/4 mx-auto btn-primary ">
-                        Login
+                        เข้าสู่ระบบ
                     </button>
                 </form>
             </section>

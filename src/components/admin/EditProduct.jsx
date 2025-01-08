@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from 'react-toastify';
 
-import { editProduct } from "./../../reducers/productSlice";
+import { editProduct, productSchema } from "./../../reducers/productSlice";
 
 const EditProduct = ({ setModalEdit, item }) => {
 
@@ -24,11 +24,22 @@ const EditProduct = ({ setModalEdit, item }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!image) {
+            toast.error("กรุณาอัปโหลดรูปภาพ");
+            return;
+        }
 
+        const editProductForm = { id: item.id, title, price, image }
+        const { error } = productSchema.validate(editProductForm);
 
-        dispatch(editProduct({ id: item.id, title, price, image }));
+        if (error) {
+            toast.error(error.details[0].message);
+            return;
+        }
 
-        toast.success("Product updated successfully");
+        dispatch(editProduct(editProductForm));
+
+        toast.success("อัพเดทข้อมูลเรียบร้อยแล้ว");
         setModalEdit(false); // ปิด Modal หลังจากแก้ไขสำเร็จ
     };
     return (
@@ -38,7 +49,7 @@ const EditProduct = ({ setModalEdit, item }) => {
                 <form onSubmit={handleSubmit} className="w-full flex flex-col justify-center gap-4">
                     <label className="form-control w-full">
                         <div className="label">
-                            <span className="label-text">Title</span>
+                            <span className="label-text">ชื่อสินค้า</span>
                         </div>
                         <input
                             type="text"
@@ -49,7 +60,7 @@ const EditProduct = ({ setModalEdit, item }) => {
                     </label>
                     <label className="form-control w-full">
                         <div className="label">
-                            <span className="label-text">Price</span>
+                            <span className="label-text">ราคา</span>
                         </div>
                         <input
                             type="number"
@@ -60,7 +71,7 @@ const EditProduct = ({ setModalEdit, item }) => {
                     </label>
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
-                            <span className="label-text">Image</span>
+                            <span className="label-text">รูปภาพ</span>
                         </div>
                         <input
                             type="file"
@@ -82,10 +93,10 @@ const EditProduct = ({ setModalEdit, item }) => {
                             className="btn btn-outline btn-error"
                             onClick={() => setModalEdit(false)}
                         >
-                            Cancel
+                            ยกเลิก
                         </button>
                         <button type="submit" className="btn btn-outline btn-primary">
-                            Save
+                            บันทึก
                         </button>
                     </div>
                 </form>

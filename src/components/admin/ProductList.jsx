@@ -14,9 +14,7 @@ const ProductList = ({ setListModal }) => {
             dispatch(fetchProducts());
         }
     }, [dispatch, items.length]);
-    console.log("Items in Store:", items); // ดูว่ามีข้อมูลหรือไม่
-    console.log("IDs in Items:", items.map((item) => item.id)); // ดูค่า id ทั้งหมด
-    console.log("Max ID:", Math.max(...items.map((item) => Number(item.id)))); // ดูค่า id สูงสุด
+
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -61,7 +59,7 @@ const ProductList = ({ setListModal }) => {
 
                     ) : (
                         <div className='pt-32'>
-                            <p className="text-gray-500 text-2xl">ไม่มีผู้โชคดีในรางวัลนี้</p>
+                            <p className="text-gray-500 text-2xl">ไม่มีข้อมูลสินค้า</p>
                         </div>
                     )}
                 </div>
