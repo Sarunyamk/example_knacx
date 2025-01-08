@@ -6,7 +6,7 @@ const currentUser = localStorage.getItem("currentUser") ? JSON.parse(localStorag
 
 const userSchemaRegister = Joi.object({
     email: Joi.string().email({ tlds: { allow: false } }).required().messages({
-        "string.empty": "กรุณากรอก Email",
+        "string.empty": "กรุณากรอกอีเมล",
         "string.email": "กรุณากรอกอีเมลให้ถูกต้อง",
     }),
     password: Joi.string().min(6).required().messages({
@@ -27,7 +27,7 @@ const userSchemaRegister = Joi.object({
 });
 const userSchemaLogin = Joi.object({
     email: Joi.string().email({ tlds: { allow: false } }).required().messages({
-        "string.empty": "กรุณากรอก Email",
+        "string.empty": "กรุณากรอกอีเมล",
         "string.email": "กรุณากรอกอีเมลให้ถูกต้อง",
     }),
     password: Joi.string().min(6).required().messages({
