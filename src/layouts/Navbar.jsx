@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { FaShoppingCart } from "react-icons/fa";
 import { logout } from "../reducers/userSlice";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CartDetail from "../components/Pagination/CartDetail";
 
 const Navbar = () => {
@@ -12,11 +12,38 @@ const Navbar = () => {
 
     const userLogin = JSON.parse(localStorage.getItem("currentUser"));
     const dispatch = useDispatch();
+    const [totalQuantity, setTotalQuantity] = useState(0);
 
-    // Parse cart data from localStorage
-    const cartData = JSON.parse(localStorage.getItem("cart")) || [];
-    const userCart = cartData.find((cart) => cart.userId === userLogin?.id) || { totalQuantity: 0 };
-    const count = userCart.totalQuantity;
+    // ฟังก์ชันดึงข้อมูล totalQuantity จาก localStorage
+    const updateTotalQuantity = () => {
+        const cartFromStorage = JSON.parse(localStorage.getItem("cart")) || [];
+        const currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+
+        if (currentUser) {
+            const userCart = cartFromStorage.find(
+                (cart) => cart.userId === currentUser.id
+            );
+            setTotalQuantity(userCart ? userCart.totalQuantity : 0);
+        } else {
+            setTotalQuantity(0);
+        }
+    };
+
+    // ดึงข้อมูลครั้งแรกเมื่อ component ถูก mount
+    useEffect(() => {
+        updateTotalQuantity();
+
+        // เพิ่ม event listener เพื่อติดตามการเปลี่ยนแปลงใน localStorage
+        const handleStorageChange = () => {
+            updateTotalQuantity();
+        };
+
+        window.addEventListener("storage", handleStorageChange);
+
+        return () => {
+            window.removeEventListener("storage", handleStorageChange);
+        };
+    }, []);
 
     const hdlLogout = () => {
         dispatch(logout());
@@ -44,7 +71,7 @@ const Navbar = () => {
                                     <div className="cursor-pointer flex justify-center items-center relative">
                                         <FaShoppingCart onClick={() => setModalCart(true)} />
                                         <div className="absolute text-sm -top-2 -right-4 w-5 h-5 bg-red-500 rounded-full flex justify-center items-center">
-                                            {count}
+                                            {totalQuantity}
                                         </div>
                                     </div>
                                 </div>
