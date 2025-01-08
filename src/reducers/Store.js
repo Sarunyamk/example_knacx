@@ -8,7 +8,7 @@ const store = configureStore({
     reducer: {
         userStore: userSlice,
         productStore: productsSlice,
-        cartStore: cartSlice
+        cart: cartSlice
     }
 
 })

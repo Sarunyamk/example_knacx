@@ -1,5 +1,7 @@
+
 import { createSlice } from "@reduxjs/toolkit";
 
+// ค่าเริ่มต้นของตะกร้าสินค้า
 const initialState = JSON.parse(localStorage.getItem("cart")) || [];
 
 const cartSlice = createSlice({
@@ -13,54 +15,53 @@ const cartSlice = createSlice({
             if (userCartIndex === -1) {
                 state.push({
                     userId,
-                    items: [
-                        { ...product, quantity: 1, totalPrice: product.price }
-                    ],
+                    items: [{ ...product, quantity: 1, totalPrice: product.price }],
                     totalQuantity: 1,
                     totalPrice: product.price,
                 });
             } else {
-                const existingItem = state[userCartIndex].items.find(
-                    (item) => item.id === product.id
-                );
+                const userCart = state[userCartIndex];
+                const existingItem = userCart.items.find((item) => item.id === product.id);
 
                 if (existingItem) {
                     existingItem.quantity++;
                     existingItem.totalPrice += product.price;
                 } else {
-                    state[userCartIndex].items.push({
+                    userCart.items.push({
                         ...product,
                         quantity: 1,
                         totalPrice: product.price,
                     });
                 }
 
-                state[userCartIndex].totalQuantity++;
-                state[userCartIndex].totalPrice += product.price;
+                userCart.totalQuantity++;
+                userCart.totalPrice += product.price;
             }
 
+            console.log("Updated state:", JSON.stringify(state, null, 2)); // ตรวจสอบ State
             localStorage.setItem("cart", JSON.stringify(state));
         },
 
+
         removeCart: (state, action) => {
             const { userId, productId } = action.payload;
-            const cartFromStorage = JSON.parse(localStorage.getItem("cart")) || [];
+            const userCartIndex = state.findIndex((cart) => cart.userId === userId);
 
-            // อัปเดตข้อมูลใน localStorage
-            const updatedCart = cartFromStorage.map((cart) => {
-                if (cart.userId === userId) {
-                    cart.items = cart.items.filter((item) => item.id !== productId);
-                    cart.totalQuantity = cart.items.reduce((sum, item) => sum + item.quantity, 0);
-                    cart.totalPrice = cart.items.reduce((sum, item) => sum + item.totalPrice, 0);
-                }
-                return cart;
-            });
+            if (userCartIndex !== -1) {
+                const cart = state[userCartIndex];
+                cart.items = cart.items.filter((item) => item.id !== productId);
+                cart.totalQuantity = cart.items.reduce(
+                    (sum, item) => sum + item.quantity,
+                    0
+                );
+                cart.totalPrice = cart.items.reduce(
+                    (sum, item) => sum + item.totalPrice,
+                    0
+                );
 
-            // เขียนข้อมูลกลับไปยัง localStorage
-            localStorage.setItem("cart", JSON.stringify(updatedCart));
-
-            // อัปเดต Redux state (เพื่อให้ state สอดคล้องกับ localStorage)
-            return updatedCart;
+                // บันทึกลง LocalStorage
+                localStorage.setItem("cart", JSON.stringify(state));
+            }
         },
 
         decrementQuantity: (state, action) => {
@@ -82,6 +83,7 @@ const cartSlice = createSlice({
                     cart.totalQuantity--;
                     cart.totalPrice -= existingItem.price;
 
+                    // บันทึกลง LocalStorage
                     localStorage.setItem("cart", JSON.stringify(state));
                 }
             }
@@ -101,14 +103,21 @@ const cartSlice = createSlice({
                     cart.totalQuantity++;
                     cart.totalPrice += existingItem.price;
 
+                    // บันทึกลง LocalStorage
                     localStorage.setItem("cart", JSON.stringify(state));
                 }
             }
         },
 
-        initializeCart: () => {
-            const cartData = JSON.parse(localStorage.getItem("cart")) || [];
-            return cartData;
+        clearCart: (state, action) => {
+            const { userId } = action.payload;
+            const userCartIndex = state.findIndex((cart) => cart.userId === userId);
+
+            if (userCartIndex !== -1) {
+                state.splice(userCartIndex, 1);
+                // บันทึกลง LocalStorage
+                localStorage.setItem("cart", JSON.stringify(state));
+            }
         },
     },
 });
@@ -118,7 +127,7 @@ export const {
     removeCart,
     decrementQuantity,
     incrementQuantity,
-    initializeCart,
+    clearCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

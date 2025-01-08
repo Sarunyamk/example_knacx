@@ -1,49 +1,18 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { FaShoppingCart } from "react-icons/fa";
 import { logout } from "../reducers/userSlice";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CartDetail from "../components/Pagination/CartDetail";
 
 const Navbar = () => {
     const [modalCart, setModalCart] = useState(false);
     const navigate = useNavigate();
-
-    const userLogin = JSON.parse(localStorage.getItem("currentUser"));
     const dispatch = useDispatch();
-    const [totalQuantity, setTotalQuantity] = useState(0);
 
-    // ฟังก์ชันดึงข้อมูล totalQuantity จาก localStorage
-    const updateTotalQuantity = () => {
-        const cartFromStorage = JSON.parse(localStorage.getItem("cart")) || [];
-        const currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
-
-        if (currentUser) {
-            const userCart = cartFromStorage.find(
-                (cart) => cart.userId === currentUser.id
-            );
-            setTotalQuantity(userCart ? userCart.totalQuantity : 0);
-        } else {
-            setTotalQuantity(0);
-        }
-    };
-
-    // ดึงข้อมูลครั้งแรกเมื่อ component ถูก mount
-    useEffect(() => {
-        updateTotalQuantity();
-
-        // เพิ่ม event listener เพื่อติดตามการเปลี่ยนแปลงใน localStorage
-        const handleStorageChange = () => {
-            updateTotalQuantity();
-        };
-
-        window.addEventListener("storage", handleStorageChange);
-
-        return () => {
-            window.removeEventListener("storage", handleStorageChange);
-        };
-    }, []);
+    const userCart = useSelector((state) => state.cart);
+    const userLogin = JSON.parse(localStorage.getItem("currentUser")) || null;
 
     const hdlLogout = () => {
         dispatch(logout());
@@ -54,11 +23,13 @@ const Navbar = () => {
         <div>
             <nav className="flex bg-gray-700 text-white justify-between items-center py-4 px-20">
                 <div>
-                    <Link to={'/'}>Knacx</Link>
+                    <Link to="/">Knacx</Link>
                 </div>
                 <div className="flex gap-10">
-                    <Link to={'/shop'}>สินค้า</Link>
-                    {userLogin && userLogin.role === "admin" && <Link to={'/admin-create'}>จัดการสินค้า</Link>}
+                    <Link to="/shop">สินค้า</Link>
+                    {userLogin && userLogin.role === "admin" && (
+                        <Link to="/admin-create">จัดการสินค้า</Link>
+                    )}
                 </div>
                 <div>
                     {userLogin ? (
@@ -71,7 +42,9 @@ const Navbar = () => {
                                     <div className="cursor-pointer flex justify-center items-center relative">
                                         <FaShoppingCart onClick={() => setModalCart(true)} />
                                         <div className="absolute text-sm -top-2 -right-4 w-5 h-5 bg-red-500 rounded-full flex justify-center items-center">
-                                            {totalQuantity}
+                                            {userCart
+                                                ?.find((cart) => cart.userId === userLogin?.id)
+                                                ?.totalQuantity || 0}
                                         </div>
                                     </div>
                                 </div>
@@ -80,8 +53,12 @@ const Navbar = () => {
                         </div>
                     ) : (
                         <div className="flex justify-between items-center gap-10">
-                            <Link to={'/register'}><button>ลงทะเบียน</button></Link>
-                            <Link to={'/login'}><button>เข้าสู่ระบบ</button></Link>
+                            <Link to="/register">
+                                <button>ลงทะเบียน</button>
+                            </Link>
+                            <Link to="/login">
+                                <button>เข้าสู่ระบบ</button>
+                            </Link>
                         </div>
                     )}
                 </div>
