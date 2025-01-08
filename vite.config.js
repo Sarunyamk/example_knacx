@@ -1,14 +1,8 @@
-// import { defineConfig } from 'vite'
-// import react from '@vitejs/plugin-react'
-
-// // https://vite.dev/config/
-// export default defineConfig({
-//   plugins: [react()],
-// })
-
 import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
+  plugins: [react()], // เพิ่ม Plugin React
   build: {
     rollupOptions: {
       output: {
@@ -18,6 +12,6 @@ export default defineConfig({
         },
       },
     },
-    chunkSizeWarningLimit: 600, // ขยายขีดจำกัดการเตือน (ถ้าจำเป็น)
+    chunkSizeWarningLimit: 600, // ขยายขีดจำกัดการเตือน
   },
 });
