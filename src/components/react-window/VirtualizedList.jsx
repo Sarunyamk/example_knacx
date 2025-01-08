@@ -1,5 +1,6 @@
 import { FixedSizeList } from "react-window";
 
+
 const VirtualizedList = () => {
     const data = Array.from({ length: 100000 }, (_, index) => `Data Knacx ${index + 1}`);
 

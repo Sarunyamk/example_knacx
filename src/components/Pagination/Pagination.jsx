@@ -10,6 +10,7 @@ import { fetchProducts, deleteProduct } from "./../../reducers/productSlice";
 import { addToCart } from "./../../reducers/cartSlice";
 import EditProduct from "../admin/EditProduct";
 
+
 const Pagination = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -30,7 +31,7 @@ const Pagination = () => {
     const sortedData = [...items].sort((a, b) => b.id - a.id);
     const { currentData, currentPage, maxPage, nextPage, prevPage, jumpToPage } = usePagination(sortedData, itemsPerPage);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loading />;
     if (error) return <p>Error: {error}</p>;
 
     const hdlDeleteProduct = (id) => {

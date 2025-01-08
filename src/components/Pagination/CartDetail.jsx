@@ -2,6 +2,9 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { toast } from "react-toastify";
+import Swal from 'sweetalert2';
+
+
 import { removeCart, decrementQuantity, incrementQuantity, clearCart } from "../../reducers/cartSlice";
 
 const CartDetail = ({ setModalCart }) => {
@@ -55,8 +58,24 @@ const CartDetail = ({ setModalCart }) => {
     };
 
     const hdlCheckout = () => {
-        dispatch(clearCart({ userId: userLogin.id })); // ส่งแค่ userId
-        toast.success("ชำระเงินเรียบร้อย!");
+        Swal.fire({
+            title: "คุณยืนยันการชำระเงินใช่ไหม?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "ยืนยัน ชำระเงิน",
+            cancelButtonText: "ยกเลิก",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(clearCart({ userId: userLogin.id }));
+                Swal.fire({
+                    title: "ชำระเงินเรียบร้อยแล้ว!",
+                    icon: "success"
+                });
+            }
+        });
+
     };
 
 
