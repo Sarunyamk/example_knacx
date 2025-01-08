@@ -9,6 +9,7 @@ import usePagination from "./usePagination";
 import { fetchProducts, deleteProduct } from "./../../reducers/productSlice";
 import { addToCart } from "./../../reducers/cartSlice";
 import EditProduct from "../admin/EditProduct";
+import Loading from "../../utils/Loading";
 
 
 const Pagination = () => {

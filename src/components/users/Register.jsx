@@ -38,7 +38,7 @@ const Register = () => {
     return (
         <div>
             <section className="w-96 bg-gray-200 mx-auto mt-10 flex flex-col justify-center items-center rounded-lg shadow-xl p-6 ">
-                <h1 className="text-2xl">ลงทะเบียน</h1>
+                <h1 className="text-2xl text-black">ลงทะเบียน</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col justify-center gap-4">
                     <label className="form-control w-full ">
                         <div className="label">
@@ -47,7 +47,7 @@ const Register = () => {
                         <input
                             type="email"
                             placeholder="กรอกอีเมลที่นี่..."
-                            className="input input-bordered w-full "
+                            className="input input-bordered w-full bg-gray-100 border-gray-300 text-gray-800"
                             {...register("email")}
                         />
                     </label>
@@ -58,7 +58,7 @@ const Register = () => {
                         <input
                             type="password"
                             placeholder="กรอกรหัสผ่านที่นี่..."
-                            className="input input-bordered w-full "
+                            className="input input-bordered w-full bg-gray-100 border-gray-300 text-gray-800"
                             {...register("password")}
                         />
                     </label>
@@ -69,7 +69,7 @@ const Register = () => {
                         <input
                             type="password"
                             placeholder="กรอกรหัสผ่านที่นี่..."
-                            className="input input-bordered w-full "
+                            className="input input-bordered w-full bg-gray-100 border-gray-300 text-gray-800"
                             {...register("confirmPassword")}
                         />
                     </label>
@@ -78,7 +78,7 @@ const Register = () => {
                         <div class="label">
                             <span class="label-text">สิทธิ์ผู้ใช้งาน</span>
                         </div>
-                        <select class="select select-bordered"
+                        <select class="select select-bordered bg-gray-100 border-gray-300 text-gray-800"
                             {...register("role")}>
                             <option value="user">User</option>
                             <option value="admin">Admin</option>

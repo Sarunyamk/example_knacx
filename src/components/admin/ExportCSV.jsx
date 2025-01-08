@@ -18,7 +18,7 @@ const ExportCSV = () => {
                 data={items}
                 headers={headers}
                 filename={"products.csv"}
-                className="m-2 btn btn-ghost btn-xs"
+                className="m-2 btn btn-primary btn-xs"
             >
                 ดาวน์โหลดไฟล์
             </CSVLink>

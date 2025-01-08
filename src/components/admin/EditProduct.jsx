@@ -55,7 +55,7 @@ const EditProduct = ({ setModalEdit, item }) => {
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            className="input input-bordered w-full"
+                            className="input input-bordered w-full bg-gray-100 border-gray-300 text-gray-800"
                         />
                     </label>
                     <label className="form-control w-full">
@@ -66,17 +66,17 @@ const EditProduct = ({ setModalEdit, item }) => {
                             type="number"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
-                            className="input input-bordered w-full"
+                            className="input input-bordered w-full bg-gray-100 border-gray-300 text-gray-800"
                         />
                     </label>
-                    <label className="form-control w-full max-w-xs">
+                    <label className="form-control w-full ">
                         <div className="label">
                             <span className="label-text">รูปภาพ</span>
                         </div>
                         <input
                             type="file"
                             onChange={handleFileChange}
-                            className="file-input file-input-bordered w-full max-w-xs"
+                            className="file-input file-input-bordered w-full bg-gray-100 border-gray-300 text-gray-800 "
                         />
                     </label>
                     {image && (

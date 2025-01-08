@@ -5,9 +5,11 @@ import { FaShoppingCart } from "react-icons/fa";
 import { logout } from "../reducers/userSlice";
 import { useState } from "react";
 import CartDetail from "../components/Pagination/CartDetail";
+import useDarkMode from "../utils/useDarkMode";
 
 const Navbar = () => {
     const [modalCart, setModalCart] = useState(false);
+    const [isDarkMode, toggleDarkMode] = useDarkMode();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -31,7 +33,7 @@ const Navbar = () => {
                         <Link to="/admin-create">จัดการสินค้า</Link>
                     )}
                 </div>
-                <div>
+                <div className="flex gap-10 items-center">
                     {userLogin ? (
                         <div className="flex gap-10">
                             {userLogin.role === "admin" ? (
@@ -61,7 +63,23 @@ const Navbar = () => {
                             </Link>
                         </div>
                     )}
+                    <div className="form-control">
+                        <label
+                            className="label cursor-pointer"
+                            aria-label="Toggle Dark Mode"
+                            onClick={toggleDarkMode}
+                        >
+
+                            <input
+                                type="checkbox"
+                                className="toggle"
+                                checked={isDarkMode}
+                                readOnly
+                            />
+                        </label>
+                    </div>
                 </div>
+
             </nav>
             {modalCart && <CartDetail setModalCart={setModalCart} />}
         </div>

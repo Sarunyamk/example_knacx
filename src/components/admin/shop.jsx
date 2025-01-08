@@ -72,7 +72,7 @@ const Shop = () => {
 
     return (
         <div>
-            <div className="flex flex-col items-center justify-center py-20 bg-gray-100 text-center">
+            <div className="flex flex-col items-center justify-center py-16  text-center">
                 <div className="flex justify-end w-full px-10">
                     <button onClick={() => setListModal(true)} className="btn btn-primary">รายการสินค้าทั้งหมด</button>
                 </div>
@@ -91,7 +91,7 @@ const Shop = () => {
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 placeholder="ชื่อสินค้า..."
-                                className="input input-bordered w-full"
+                                className="input input-bordered w-full bg-gray-100 border-gray-300 text-gray-800"
                             />
                         </label>
                         <label className="form-control w-full">
@@ -103,14 +103,14 @@ const Shop = () => {
                                 value={price}
                                 onChange={(e) => setPrice(e.target.value)}
                                 placeholder="ราคา..."
-                                className="input input-bordered w-full"
+                                className="input input-bordered w-full bg-gray-100 border-gray-300 text-gray-800"
                             />
                         </label>
-                        <label className="form-control w-full max-w-xs">
+                        <label className="form-control w-full ">
                             <div className="label">
                                 <span className="label-text">เลือกไฟล์</span>
                             </div>
-                            <input type="file" onChange={handleFileChange} className="file-input file-input-bordered w-full max-w-xs" />
+                            <input type="file" onChange={handleFileChange} className="file-input file-input-bordered w-full bg-gray-100 border-gray-300 text-gray-800 " />
                         </label>
                         {image && (
                             <div className="mt-4">

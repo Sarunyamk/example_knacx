@@ -24,7 +24,7 @@ const ProductList = ({ setListModal }) => {
                     <div className="absolute right-5 ">
                         <ExportCSV />
                     </div>
-                    <button onClick={() => setListModal(false)} className="absolute -right-10 -top-10 text-sm font-bold p-4 duration-300 hover:text-blue-500">X</button>
+                    <button onClick={() => setListModal(false)} className="absolute text-black -right-10 -top-10 text-sm font-bold p-4 duration-300 hover:text-blue-500">X</button>
 
                 </div>
                 <div className=' w-full h-[400px]'>

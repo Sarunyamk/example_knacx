@@ -4,7 +4,13 @@
 
 html,
 body {
-  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  background-color: #2a2b33;
 }
 
 .loader {
@@ -26,4 +32,14 @@ body {
   100% {
     background-position: 0%;
   }
+}
+
+body.dark {
+  background-color: #2a2b33;
+  color: #ffffff;
+}
+
+body {
+  background-color: #ffffff;
+  color: #000000;
 }

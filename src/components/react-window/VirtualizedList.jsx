@@ -8,7 +8,7 @@ const VirtualizedList = () => {
         <div>
             <h1 className="text-2xl font-bold text-center my-10">รายการ</h1>
             <FixedSizeList
-                className="h-screen overflow-y-scroll bg-red-400 text-xl"
+                className="h-screen overflow-y-scroll text-xl "
                 height={550}
                 itemCount={data.length}
                 itemSize={50}

@@ -88,7 +88,7 @@ const CartDetail = ({ setModalCart }) => {
                         <h1 className="text-3xl text-center font-bold text-blue-500">ตะกร้าสินค้า</h1>
                         <button
                             onClick={() => setModalCart(false)}
-                            className="absolute -right-10 -top-10 text-sm font-bold p-4 duration-300 hover:text-blue-500"
+                            className="absolute -right-10 -top-10 text-sm text-black font-bold p-4 duration-300 hover:text-blue-500"
                         >
                             X
                         </button>

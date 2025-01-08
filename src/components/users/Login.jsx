@@ -41,7 +41,7 @@ const Login = () => {
     return (
         <div>
             <section className="w-96 bg-gray-200 mx-auto mt-20 flex flex-col items-center rounded-lg shadow-xl p-4 gap-4">
-                <h1 className="text-2xl">เข้าสู่ระบบ</h1>
+                <h1 className="text-2xl text-black">เข้าสู่ระบบ</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col justify-center gap-4">
                     <label className="form-control w-full ">
                         <div className="label">
@@ -50,7 +50,7 @@ const Login = () => {
                         <input
                             type="email"
                             placeholder="กรอกอีเมลที่นี่..."
-                            className="input input-bordered w-full "
+                            className="input input-bordered w-full bg-gray-100 border-gray-300 text-gray-800"
                             {...register("email")}
                         />
                     </label>
@@ -61,7 +61,7 @@ const Login = () => {
                         <input
                             type="password"
                             placeholder="กรอกรหัสผ่านที่นี่..."
-                            className="input input-bordered w-full "
+                            className="input input-bordered w-full bg-gray-100 border-gray-300 text-gray-800"
                             {...register("password")}
                         />
                     </label>
